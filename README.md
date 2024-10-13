@@ -4,6 +4,7 @@
 
 # Run Script
 run:
+
     1. python main.py
 
 You will be prompted to input 2 values in the beginning:
@@ -19,6 +20,7 @@ You will be led to a menu of choices
     4. Reconstruct Secret from Shares -> this option reconstructs the secret from the shares
 
 example: 
+
 
 sources:
 
