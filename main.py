@@ -61,4 +61,4 @@ while running:
         running = False  # Exit the loop
 
     else:
-        print("[ERROR] Invalid option, please choose again.")
+        print("[!] Invalid option, please choose again.")
