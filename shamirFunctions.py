@@ -86,6 +86,9 @@ class ShamirSharingSecret:
 
             k = len(self.shares)
 
+
+            print(f"[INFO] calculating secret key...")
+            
             for n in range(k):
                 x_n, y_n = self.shares[n]
                 L_n = 1

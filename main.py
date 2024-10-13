@@ -1,7 +1,15 @@
 from shamirFunctions import *  
 
+num_of_shares = input(int("""
+[INFO] The Number of shares is the amount of shares you will be creating from the secret
+define the Number of shares: """)
+
+threshold = input(int("""
+[INFO] The threshold is the amount of shares you need to reconstruct the Key
+define the threshold: """)
+
 # Create an instance of the ShamirSharingSecret class
-shamir = ShamirSharingSecret(threshold=3, num_of_shares=5)
+shamir = ShamirSharingSecret(threshold, num_of_shares)
 
 # Generate the AES key and convert it to an integer
 shamir.generate_AES_key()
