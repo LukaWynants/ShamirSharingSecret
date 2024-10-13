@@ -20,7 +20,7 @@ class ShamirSharingSecret:
         # generate random AES key
         print("[INFO] Generating AES key...")
         
-        self.AES_key = get_random_bytes(16)
+        self.AES_key = get_random_bytes(4)
         print(f"[INFO] KEY: {self.AES_key}")
         
 
@@ -76,6 +76,32 @@ class ShamirSharingSecret:
 
             # storing the x,y valuies as a tuple in the shares list
             self.shares.append((x,y))
+
+    def reconstruct_secret(self):
+            """
+            Reconstruct the secret from the given shares using Lagrange interpolation
+            """
+            #set the secret key at 0
+            secret = 0
+
+            k = len(self.shares)
+
+            for n in range(k):
+                x_n, y_n = self.shares[n]
+                L_n = 1
+
+                for m in range(k):
+                    if m != n:
+                        x_m, _ = self.shares[m]
+                        L_n *= (0 - x_m) / (x_n - x_m)  # Use 0 to evaluate L_j at x=0
+
+                secret += y_n * L_n
+
+            print(f"[INFO] SECRET KEY calculated: {int(secret)}")
+
+            #self.secret_key = secret
+
+    
 
     
 

@@ -18,3 +18,5 @@ shamir.calculate_shares()
 
 # Print shares
 print("Shares:", shamir.shares)
+
+shamir.reconstruct_secret()
