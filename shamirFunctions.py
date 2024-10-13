@@ -1,18 +1,36 @@
 #importing the secrets library to generate randomly secure numbers
 import secrets
+from Crypto.Cipher import AES
+from Crypto.Random import get_random_bytes
 
 class ShamirSharingSecret:
 
-    def __init__(self, secret_key, threshold, num_of_shares):
-        self.secret_key = secret_key
+    def __init__(self, threshold, num_of_shares):
+        self.AES_key = 0
+        self.secret_key = 0
         self.threshold = threshold
         self.num_of_shares = num_of_shares
-        self.coefficients = [secret_key] #the X values of the polinomial
+        self.coefficients = [] #the X values of the polinomial
         self.shares = []
 
     def generate_AES_key(self):
-        pass
+        """
+        A method to generate an AES key for encryption
+        """
+        # generate random AES key
+        print("[INFO] Generating AES key...")
+        
+        self.AES_key = get_random_bytes(16)
+        print(f"[INFO] KEY: {self.AES_key}")
+        
 
+    def AES_to_int(self):
+        print("[INFO] Converting AES bytes to integer...")
+        self.secret_key = int.from_bytes(self.AES_key, 'big')
+        print(f"[INFO] KEY: {self.secret_key}")
+
+        # adding the secret key as the first coefficient
+        self.coefficients.append(self.secret_key)
 
     def generate_polynomials(self):
         """
@@ -31,9 +49,14 @@ class ShamirSharingSecret:
             to find the value of c (secret) you will need atleast 3 coordinates of the curve
 
         """
-        # generate k-1 coefficients
-        for i in range(self.threshold - 1):
-            self.coefficients.append(secrets.randbelow(256))
+        if self.secret_key == 0:
+            print("[!] AES secret key not set/generated...")
+            print("[INFO] generate your AES key before calculating your shares")
+
+        else:
+            # generate k-1 coefficients
+            for i in range(self.threshold - 1):
+                self.coefficients.append(secrets.randbelow(256))
 
     def calculate_shares(self):
         """
