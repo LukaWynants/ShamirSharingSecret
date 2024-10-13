@@ -5,11 +5,11 @@
 # Run Script
 run:
 
-    1. python main.py
+    python main.py
 
 You will be prompted to input 2 values in the beginning:
 
-    a. Number of shares : This is the number of total shares 
+    a. Number of shares : This is the number of total shares your secret has/will have
     b. Threshold : This is the amount of shares needed to recover the Secret text
 
 You will be led to a menu of choices

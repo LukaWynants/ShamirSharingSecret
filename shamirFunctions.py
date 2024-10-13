@@ -102,7 +102,8 @@ class ShamirSharingSecret:
 
             print(f"[INFO] SECRET KEY calculated: {int(secret)}")
 
-            #self.secret_key = secret
+            self.secret_key = secret
+            return secret
 
     
 

@@ -16,11 +16,12 @@ while running:
 ##                                               ##
 ## 1: Generate Secret                            ##
 ## 2: Generate Shares                            ##
-## 3: Input Your Own Shares                      ##
+## 3: Input Your Own Shares to reconstruct       ##
 ## 4: Reconstruct Secret from Shares             ##
-## 5: Exit                                       ##
+## 5: Re-enter Number of shares & threshold      ##
+## 0: Exit                                       ##
 ##                                               ##
-####################################################
+###################################################
 """)
 
     option = int(input("[INFO] Choose an option: "))
@@ -53,11 +54,17 @@ while running:
             y = int(input(f"[INFO] Value y{i}: "))
             shamir.shares.append((x, y))
 
+        reconstructed_secret = shamir.reconstruct_secret()
+
     elif option == 4:
         reconstructed_secret = shamir.reconstruct_secret()
-        print(f"[INFO] Reconstructed Secret: {reconstructed_secret}")
 
     elif option == 5:
+        num_of_shares = int(input("[INFO] Define the number of shares: "))
+        threshold = int(input("[INFO] Define the threshold: "))
+        shamir = ShamirSharingSecret(threshold, num_of_shares)
+
+    elif option == 0:
         running = False  # Exit the loop
 
     else:
