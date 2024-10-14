@@ -11,17 +11,17 @@ running = True
 
 while running:
     print("""
-###################################################
-##                     MENU                      ##
-##                                               ##
-## 1: Generate Secret                            ##
-## 2: Generate Shares                            ##
-## 3: Input Your Own Shares to reconstruct       ##
-## 4: Reconstruct Secret from Shares             ##
-## 5: Re-enter Number of shares & threshold      ##
-## 0: Exit                                       ##
-##                                               ##
-###################################################
+#####################################################
+##                      MENU                       ##
+##                                                 ##
+## 1: Generate Secret                              ##
+## 2: Generate Shares                              ##
+## 3: Input Your Own Shares and reconstruct Secret ##
+## 4: Reconstruct Secret from Shares               ##
+## 5: Re-enter Number of shares & threshold        ##
+## 0: Exit                                         ##
+##                                                 ##
+#####################################################
 """)
 
     option = int(input("[INFO] Choose an option: "))

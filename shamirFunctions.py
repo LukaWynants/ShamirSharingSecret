@@ -18,14 +18,14 @@ class ShamirSharingSecret:
         A method to generate an AES key for encryption
         """
         # generate random AES key
-        print("[INFO] Generating AES key...")
+        print("[INFO] Generating secret key...")
         
         self.AES_key = get_random_bytes(4)
         print(f"[INFO] KEY: {self.AES_key}")
         
 
     def AES_to_int(self):
-        print("[INFO] Converting AES bytes to integer...")
+        print("[INFO] Converting secret bytes to integer...")
         self.secret_key = int.from_bytes(self.AES_key, 'big')
         print(f"[INFO] KEY: {self.secret_key}")
 
@@ -103,7 +103,6 @@ class ShamirSharingSecret:
             print(f"[INFO] SECRET KEY calculated: {int(secret)}")
 
             self.secret_key = secret
-            return secret
 
     
 
