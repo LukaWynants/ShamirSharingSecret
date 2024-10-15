@@ -20,6 +20,8 @@ if you have no secret this option generates one for you it will use the AES pyth
 
 ![Alt text](pictures/option1.png)
 
+The script sadly cant handel large numbers and the acuracy decreases the larger the secret is, this is due to when using large numbers, floating-point arithmetic can introduce rounding errors, which can result in a really similar recalculated key but the last few digits might be wrong, so far the script only seems to work with 4 byte secrets.
+
 ## Option 2: Generate Shares
 
 This option generates 'n' shares (the number of shares you input earlier) from your secret in a (x, y) format     
@@ -30,9 +32,11 @@ This option generates 'n' shares (the number of shares you input earlier) from y
 
 This option allows you to input shares of a secret that you own to then calculate the original secret
     
-    *note:* Make sure the threshold is correct, you can change it with *option: 5*
+    
 
 ![Alt text](pictures/option3.png)
+
+*note:* Make sure the threshold is correct, you can change it with *option: 5*
 
 ## Option 4: Reconstruct Secret from Shares
 
@@ -47,4 +51,4 @@ This option allows you to re-enter the threshold amount needed to calculate a se
 ![Alt text](pictures/option5.png)
 
 sources:
-https://mathworld.wolfram.com/LagrangeInterpolatingPolynomial.html
+    - https://mathworld.wolfram.com/LagrangeInterpolatingPolynomial.html
