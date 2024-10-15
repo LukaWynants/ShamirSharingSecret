@@ -29,7 +29,8 @@ This option generates 'n' shares (the number of shares you input earlier) from y
 ## Option 3: Input Your Own Shares and reconstruct Secret
 
 This option allows you to input shares of a secret that you own to then calculate the original secret
-***note:*** Make sure the threshold is correct, you can change it with ***option: 5***
+    
+    *note:* Make sure the threshold is correct, you can change it with *option: 5*
 
 ![Alt text](pictures/option3.png)
 
