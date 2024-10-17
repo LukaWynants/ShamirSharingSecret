@@ -2,6 +2,7 @@
 import secrets
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
+from sympy import mod_inverse
 
 class ShamirSharingSecret:
 
@@ -20,7 +21,7 @@ class ShamirSharingSecret:
         # generate random AES key
         print("[INFO] Generating secret key...")
         
-        self.AES_key = get_random_bytes(4)
+        self.AES_key = get_random_bytes(16)
         print(f"[INFO] KEY: {self.AES_key}")
         
 
@@ -78,31 +79,34 @@ class ShamirSharingSecret:
             self.shares.append((x,y))
 
     def reconstruct_secret(self):
-            """
-            Reconstruct the secret from the given shares using Lagrange interpolation
-            """
-            #set the secret key at 0
-            secret = 0
+        """
+        Reconstruct the secret from the given shares using Lagrange interpolation in a finite field.
+        """
+        # Set the prime modulus to a large prime number greater than the secret key
+        prime_modulus = 2**257 - 1  # Example of a large prime
 
-            k = len(self.shares)
+        secret = 0
+        k = len(self.shares)
 
+        print(f"[INFO] Calculating secret key with modulus {prime_modulus}...")
 
-            print(f"[INFO] calculating secret key...")
-            
-            for n in range(k):
-                x_n, y_n = self.shares[n]
-                L_n = 1
+        for n in range(k):
+            x_n, y_n = self.shares[n]
+            L_n = 1
 
-                for m in range(k):
-                    if m != n:
-                        x_m, _ = self.shares[m]
-                        L_n *= (0 - x_m) / (x_n - x_m)  # Use 0 to evaluate L_j at x=0
+            for m in range(k):
+                if m != n:
+                    x_m, _ = self.shares[m]
+                    # Calculate Lagrange basis polynomial in modular arithmetic
+                    L_n *= (0 - x_m) * mod_inverse(x_n - x_m, prime_modulus)
+                    L_n %= prime_modulus
 
-                secret += y_n * L_n
+            # Add contribution of current share to the secret
+            secret += y_n * L_n
+            secret %= prime_modulus
 
-            print(f"[INFO] SECRET KEY calculated: {int(secret)}")
-
-            self.secret_key = secret
+        print(f"[INFO] SECRET KEY calculated: {secret}")
+        self.secret_key = secret
 
     
 
