@@ -6,13 +6,18 @@ from sympy import mod_inverse
 
 class ShamirSharingSecret:
 
-    def __init__(self, threshold, num_of_shares):
+    def __init__(self, threshold, num_of_shares, secret_message):
         self.AES_key = 0
         self.secret_key = 0
+        self.ciphertext = ""
+        self.cipher = ""
+        self.cipher_tag = ""
         self.threshold = threshold
         self.num_of_shares = num_of_shares
         self.coefficients = [] #the X values of the polinomial
         self.shares = []
+        self.secret_message = secret_message
+        self.decrypted_secret_message = ""
 
     def generate_AES_key(self):
         """
@@ -22,8 +27,8 @@ class ShamirSharingSecret:
         print("[INFO] Generating secret key...")
         
         self.AES_key = get_random_bytes(16)
-        print(f"[INFO] KEY: {self.AES_key}")
         
+        print(f"[INFO] KEY: {self.AES_key}")
 
     def AES_to_int(self):
         print("[INFO] Converting secret bytes to integer...")
@@ -32,6 +37,26 @@ class ShamirSharingSecret:
 
         # adding the secret key as the first coefficient
         self.coefficients.append(self.secret_key)
+
+    def int_to_AES(self):
+        print("[INFO] Reversing integer back to AES secret bytes...")
+ 
+        self.AES_key = self.secret_key.to_bytes(16, 'big')
+        print(f"[INFO] Reversed KEY: {self.AES_key}")
+
+    def encrypt_secret_message(self):
+        """
+        A method which encrypts the secret message to a cipher text
+        """
+        self.cipher = AES.new(self.key, AES.MODE_EAX)
+        self.ciphertext, self.tag = self.cipher.encrypt_and_digest(str.encode(self.secret_message))
+
+    def decrypt_secret_message(self):
+        """
+        A method to decrypt the secret message
+        """
+        self.decrypted_secret_message = self.cipher.decrypt_and_verify(self.ciphertext, self.cipher_tag)
+
 
     def generate_polynomials(self):
         """

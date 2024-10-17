@@ -3,9 +3,10 @@ from shamirFunctions import *
 # Input for number of shares and threshold
 num_of_shares = int(input("[INFO] Define the number of shares: "))
 threshold = int(input("[INFO] Define the threshold: "))
+secret_message = input("[INFO] Input a secret message: ")
 
 # Create an instance of the ShamirSharingSecret class
-shamir = ShamirSharingSecret(threshold, num_of_shares)
+shamir = ShamirSharingSecret(threshold, num_of_shares, secret_message)
 
 running = True
 
@@ -17,7 +18,7 @@ while running:
 ## 1: Generate Secret                              ##
 ## 2: Generate Shares                              ##
 ## 3: Input Your Own Shares and reconstruct Secret ##
-## 4: Reconstruct Secret from Shares               ##
+## 4: Reconstruct Secret key from Shares           ##
 ## 5: Re-enter Number of shares & threshold        ##
 ## 0: Exit                                         ##
 ##                                                 ##
@@ -54,10 +55,12 @@ while running:
             y = int(input(f"[INFO] Value y{i}: "))
             shamir.shares.append((x, y))
 
-        reconstructed_secret = shamir.reconstruct_secret()
+        shamir.reconstruct_secret()
+        shamir.int_to_AES()
 
     elif option == 4:
-        reconstructed_secret = shamir.reconstruct_secret()
+        shamir.reconstruct_secret()
+        shamir.int_to_AES()
 
     elif option == 5:
         num_of_shares = int(input("[INFO] Define the number of shares: "))
