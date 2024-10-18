@@ -1,6 +1,8 @@
 # Install Dependancies
 
     pip install pycryptodome
+    pip install sympy
+    pip install hashlib
 
 # Run Script
 run:
@@ -16,11 +18,11 @@ You will be led to a menu of choices:
 
 ## Option 1: Generate AES key
 
-if you have no AES key this option generates one for you it will use the AES python library to generate 16 random bytes
+if you have no AES key this option generates one for you it will use the AES python library to generate 16 random bytes, and converts it to an integer
 
 ![Alt text](pictures/option1.png)
 
-
+The first key is the 16 random bytes, the second key is these bytes in integer format
 
 ## Option 2: Generate Shares
 
@@ -50,6 +52,7 @@ This option allows you to input the encrypted message to then decrypt it with th
 ![Alt text](pictures/option5.png)
 
 *note:* Make sure the AES key is calculated *option: 4* or an AES key is generated *option 1*
+*note:* Make sure you input the AES key and Tag in a hexadecimal format
 
 ## Option 6: Reconstruct AES-key from Shares 
 
