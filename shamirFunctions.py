@@ -162,22 +162,3 @@ class ShamirSharingSecret:
 
         print(f"[INFO] SECRET KEY calculated: {secret}")
         self.secret_key = secret
-
-    
-
-    
-
-            
-                
-
-
-
-
-
-        
-
-    
-
-
-
-    
