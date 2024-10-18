@@ -36,6 +36,8 @@ This option encrypts a secret message you input using the AES key in memory
 
 ![Alt text](pictures/option3.png)
 
+*note:* Make sure the AES key is calculated *option: 4* or an AES key is generated *option 1*
+
 ## Option 4: Input Your Own Shares and reconstruct AES-KEY
 
 This option allows you to input shares of a secret AES key to then calculate the original secret
