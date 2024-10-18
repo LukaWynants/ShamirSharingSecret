@@ -61,23 +61,27 @@ class ShamirSharingSecret:
         self.ciphertext, self.tag = self.cipher.encrypt_and_digest(str.encode(self.secret_message))
 
         tag = self.tag.hex()
+        encrypted_message = self.ciphertext.hex()
 
         print(f"[NOTE] tag: {tag}")
-        print(f"[NOTE] encrypted message: {self.ciphertext}")
+        print(f"[NOTE] encrypted message: {encrypted_message}")
 
     def decrypt_secret_message(self):
         """
         A method to decrypt the secret message
         """
+        set_encrypted_message = input("[NOTE] Do you wish to input your own encrypted message? (Y/N)")
+        
+        if set_encrypted_message.lower() == "y":
+
+            encrypted_message = input("[INFO] Input an encrypted message (in HEX): ")
+            self.ciphertext = bytes.fromhex(encrypted_message)
+            tag = input("[NOTE] input tag (in HEX): ")
+            self.tag = bytes.fromhex(tag)
+
         print(f"[NOTE] Decrypting Encrypted message: {self.ciphertext}")
         nonce = hashlib.sha256(self.AES_key).digest()[:16]
         print(f"[NOTE] nonce generated: {nonce}")
-
-        set_tag = input("[NOTE] Do you wish to input your own tag? (Y/N)")
-
-        if set_tag.lower() == "y":
-            tag = input("[NOTE] input your own tag: ")
-            self.tag = bytes.fromhex(tag)
 
         self.cipher = AES.new(self.AES_key, AES.MODE_EAX, nonce=nonce)
         self.decrypted_secret_message = self.cipher.decrypt_and_verify(self.ciphertext, self.tag)

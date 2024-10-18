@@ -12,19 +12,19 @@ running = True
 
 while running:
     print("""
-#####################################################
-##                      MENU                       ##
-##                                                 ##
-## 1: Generate Secret                              ##
-## 2: Generate Shares                              ##
-## 3: Encrypt the secret message                   ##
-## 4: Input Your Own Shares and reconstruct Secret ##
-## 5: Decrypt message                              ##
-## 6: Reconstruct Secret key from Shares           ##
-## 7: Re-enter Number of shares & threshold        ##
-## 0: Exit                                         ##
-##                                                 ##
-#####################################################
+######################################################
+##                      MENU                        ##
+##                                                  ##
+## 1: Generate Secret                               ##
+## 2: Generate Shares                               ##
+## 3: Encrypt a secret message                      ##
+## 4: Input Your Own Shares and reconstruct AES-KEY ##
+## 5: Decrypt message                               ##
+## 6: Reconstruct AES-key from Shares               ##
+## 7: Re-enter Number of shares & threshold         ##
+## 0: Exit                                          ##
+##                                                  ##
+######################################################
 """)
 
     option = int(input("[INFO] Choose an option: "))
