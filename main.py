@@ -15,7 +15,7 @@ while running:
 ######################################################
 ##                      MENU                        ##
 ##                                                  ##
-## 1: Generate Secret                               ##
+## 1: Generate AES key                              ##
 ## 2: Generate Shares                               ##
 ## 3: Encrypt a secret message                      ##
 ## 4: Input Your Own Shares and reconstruct AES-KEY ##
