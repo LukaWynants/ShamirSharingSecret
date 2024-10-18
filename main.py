@@ -3,10 +3,10 @@ from shamirFunctions import *
 # Input for number of shares and threshold
 num_of_shares = int(input("[INFO] Define the number of shares: "))
 threshold = int(input("[INFO] Define the threshold: "))
-secret_message = input("[INFO] Input a secret message: ")
+
 
 # Create an instance of the ShamirSharingSecret class
-shamir = ShamirSharingSecret(threshold, num_of_shares, secret_message)
+shamir = ShamirSharingSecret(threshold, num_of_shares)
 
 running = True
 
@@ -17,9 +17,11 @@ while running:
 ##                                                 ##
 ## 1: Generate Secret                              ##
 ## 2: Generate Shares                              ##
-## 3: Input Your Own Shares and reconstruct Secret ##
-## 4: Reconstruct Secret key from Shares           ##
-## 5: Re-enter Number of shares & threshold        ##
+## 3: Encrypt the secret message                   ##
+## 4: Input Your Own Shares and reconstruct Secret ##
+## 5: Decrypt message                              ##
+## 6: Reconstruct Secret key from Shares           ##
+## 7: Re-enter Number of shares & threshold        ##
 ## 0: Exit                                         ##
 ##                                                 ##
 #####################################################
@@ -46,6 +48,9 @@ while running:
         print("[INFO] Shares:", shamir.shares)
 
     elif option == 3:
+        shamir.encrypt_secret_message()
+
+    elif option == 4:
         # Clearing the shares
         shamir.shares = []
         
@@ -58,11 +63,15 @@ while running:
         shamir.reconstruct_secret()
         shamir.int_to_AES()
 
-    elif option == 4:
+    elif option == 5:
+        shamir.decrypt_secret_message()
+
+
+    elif option == 6:
         shamir.reconstruct_secret()
         shamir.int_to_AES()
 
-    elif option == 5:
+    elif option == 7:
         num_of_shares = int(input("[INFO] Define the number of shares: "))
         threshold = int(input("[INFO] Define the threshold: "))
         shamir = ShamirSharingSecret(threshold, num_of_shares)

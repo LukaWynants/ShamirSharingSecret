@@ -3,20 +3,21 @@ import secrets
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 from sympy import mod_inverse
+import hashlib
 
 class ShamirSharingSecret:
 
-    def __init__(self, threshold, num_of_shares, secret_message):
+    def __init__(self, threshold, num_of_shares):
         self.AES_key = 0
         self.secret_key = 0
         self.ciphertext = ""
         self.cipher = ""
-        self.cipher_tag = ""
+        self.tag = ""
         self.threshold = threshold
         self.num_of_shares = num_of_shares
         self.coefficients = [] #the X values of the polinomial
         self.shares = []
-        self.secret_message = secret_message
+        self.secret_message = ""
         self.decrypted_secret_message = ""
 
     def generate_AES_key(self):
@@ -39,6 +40,9 @@ class ShamirSharingSecret:
         self.coefficients.append(self.secret_key)
 
     def int_to_AES(self):
+        """ 
+        A method which converts a AES key back to bytes
+        """
         print("[INFO] Reversing integer back to AES secret bytes...")
  
         self.AES_key = self.secret_key.to_bytes(16, 'big')
@@ -48,14 +52,36 @@ class ShamirSharingSecret:
         """
         A method which encrypts the secret message to a cipher text
         """
-        self.cipher = AES.new(self.key, AES.MODE_EAX)
+        self.secret_message = input("[INFO] Input a secret message: ")
+        print(f"[NOTE] Encrypting secret message: {self.secret_message}")
+        # create a fixed nonce from the private key
+        nonce = hashlib.sha256(self.AES_key).digest()[:16]
+        print(f"[NOTE] nonce generated: {nonce}")
+        self.cipher = AES.new(self.AES_key, AES.MODE_EAX, nonce=nonce)
         self.ciphertext, self.tag = self.cipher.encrypt_and_digest(str.encode(self.secret_message))
+
+        tag = self.tag.hex()
+
+        print(f"[NOTE] tag: {tag}")
+        print(f"[NOTE] encrypted message: {self.ciphertext}")
 
     def decrypt_secret_message(self):
         """
         A method to decrypt the secret message
         """
-        self.decrypted_secret_message = self.cipher.decrypt_and_verify(self.ciphertext, self.cipher_tag)
+        print(f"[NOTE] Decrypting Encrypted message: {self.ciphertext}")
+        nonce = hashlib.sha256(self.AES_key).digest()[:16]
+        print(f"[NOTE] nonce generated: {nonce}")
+
+        set_tag = input("[NOTE] Do you wish to input your own tag? (Y/N)")
+
+        if set_tag.lower() == "y":
+            tag = input("[NOTE] input your own tag: ")
+            self.tag = bytes.fromhex(tag)
+
+        self.cipher = AES.new(self.AES_key, AES.MODE_EAX, nonce=nonce)
+        self.decrypted_secret_message = self.cipher.decrypt_and_verify(self.ciphertext, self.tag)
+        print(f"[NOTE] decrypted message: {self.decrypted_secret_message}")
 
 
     def generate_polynomials(self):
@@ -105,7 +131,7 @@ class ShamirSharingSecret:
 
     def reconstruct_secret(self):
         """
-        Reconstruct the secret from the given shares using Lagrange interpolation in a finite field.
+        A method which Reconstructs the secret from the given shares using Lagrange interpolation.
         """
         # Set the prime modulus to a large prime number greater than the secret key
         prime_modulus = 2**257 - 1  # Example of a large prime
